@@ -33,7 +33,7 @@ const fetchISSFlyOverTimes = function(body) {
 };
 
 
-const nextISSTimesForMyLocation = function(cb) {
+const nextISSTimesForMyLocation = function() {
 
   return fetchMyIP()
     .then(fetchCoordsByIP)
