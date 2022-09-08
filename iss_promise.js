@@ -18,8 +18,33 @@ const fetchMyIP = function() {
 const fetchCoordsByIP = function(body) {
 
   const ip = JSON.parse(body).ip;
-  return request(`http://ipwho.is/${ip}?output=json&fields=longitude,latitude`);
+  return request(`http://ipwho.is/${ip}`);
 
 };
 
-module.exports = { fetchMyIP, fetchCoordsByIP };
+/*
+ * purpose: Requests data from api.open-notify.org using provided lat/long data
+ * parameters: JSON body containing geo data response from ipwho.is
+ * Returns: Promise of request for fly over data, returned as JSON string
+ */
+const fetchISSFlyOverTimes = function(body) {
+  const { latitude, longitude } = JSON.parse(body);
+  return request(`https://iss-pass.herokuapp.com/json/?lat=${latitude}&lon=${longitude}`);
+};
+
+
+const nextISSTimesForMyLocation = function(cb) {
+
+  return fetchMyIP()
+    .then(fetchCoordsByIP)
+    .then(fetchISSFlyOverTimes)
+    .then((data) => {
+      const { response } = JSON.parse(data);
+      return response;
+    });
+
+};
+
+
+
+module.exports = { nextISSTimesForMyLocation };
