@@ -10,4 +10,16 @@ const fetchMyIP = function() {
 };
 
 
-module.exports = { fetchMyIP };
+/*
+ * Purpose: Makes a request to ipwho.is using the provided IP address to get its geographical information (latitude/longitude)
+ * Parameters: JSON string containing the IP address
+ * Returns: Promise of request for lat/lon
+ */
+const fetchCoordsByIP = function(body) {
+
+  const ip = JSON.parse(body).ip;
+  return request(`http://ipwho.is/${ip}?output=json&fields=longitude,latitude`);
+
+};
+
+module.exports = { fetchMyIP, fetchCoordsByIP };

@@ -1,4 +1,5 @@
-const { fetchMyIP } = require("./iss_promise");
+const { fetchMyIP, fetchCoordsByIP } = require("./iss_promise");
 
 fetchMyIP()
-  .then(body => console.log(JSON.parse(body)));
+  .then(fetchCoordsByIP)
+  .then(body => console.log(body));
